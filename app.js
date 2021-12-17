@@ -36,38 +36,32 @@ app.get('/', (req, res) =>{
 })
 
 
-//get the bitcoin price in USD
-var rightNow = new Date();
-var year = rightNow.getUTCFullYear();
-var month = rightNow.getUTCMonth() + 1;
-var day = rightNow.getUTCDate();
-var hour = rightNow.getUTCHours();
-var minute = rightNow.getUTCMinutes();
-var second = rightNow.getUTCSeconds();
-var millisecond = rightNow.getUTCMilliseconds();
-
-var date = year + "-" + month + "-" + day;
-var time = hour + ":" + minute + ":" + second + "." + millisecond;
-var utcFormat = date + 'T' + time + 'Z'
-
 
 //pull from url
 function getBitCoin() {
     
+    var rightNow = new Date();
+    var year = rightNow.getUTCFullYear();
+    var month = rightNow.getUTCMonth() + 1;
+    var day = rightNow.getUTCDate();
+    var hour = rightNow.getUTCHours();
+    var minute = rightNow.getUTCMinutes();
+    var second = rightNow.getUTCSeconds();
+    var millisecond = rightNow.getUTCMilliseconds();
+    
+    var date = year + "-" + String(month).padStart(2,0) + "-" + String(day).padStart(2, 0);
+    var time = String(hour).padStart(2,0) + ":" + String(minute).padStart(2,0) + ":" + String(second).padStart(2,0) + "." + String(millisecond).padStart(3,0);
+    var utcFormat = date + 'T' + time + 'Z'
+    
+
     const promise = axios.get('https://blockchain.info/ticker')
     const dataPromise = promise.then((response) => 
- '1 BTC = $' + response.data.USD.buy + response.data.USD.symbol + ' ' + 'at ' + utcFormat );
+ '1 BTC = $' + response.data.USD.buy + response.data.USD.symbol + ' ' + 'at ' + utcFormat);
 
  return dataPromise;
 
 }
 
-//parse out into a string and return for server to use
-// getBitCoin().then((data) => {
-//     console.log(data)
-//     ret = data;
-
-// });
 
 
 
